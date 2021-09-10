@@ -1,0 +1,28 @@
+{
+  "name": "node-practice-project",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "eslint --fix main.js",
+    "format": "prettier -w .",
+    "hooks:pre-commit": "node ./hooks/pre-commit.js",
+    "hooks:pre-push": "node ./hooks/pre-push.js",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "pre-commit": "npm run hooks:pre-commit",
+    "pre-push": "npm run hooks:pre-push"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "prettier": "^2.4.0",
+    "vite": "^2.5.4"
+  }
+}
