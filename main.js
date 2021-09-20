@@ -1,5 +1,4 @@
 const express = require("express");
-const User = require("./routes/api/user");
 
 const app = express();
 // eslint-disable-next-line import/order
@@ -13,7 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // User routes
-app.use("/api/user", User);
+
+require("./routes/api")(app);
 
 // static folder
 app.use(express.static(path.join(__dirname, "public")));
