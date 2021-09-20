@@ -1,8 +1,10 @@
 const express = require("express");
+const User = require("./routes/api/user");
+
 const app = express();
+// eslint-disable-next-line import/order
 const path = require("path");
 const logger = require("./middlewares/logger");
-const { port } = require("./config/app");
 
 app.use(logger);
 
@@ -10,10 +12,10 @@ app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Members routes
-app.use("/api/clients", require("./routes/api/clients"));
+// User routes
+app.use("/api/user", User);
 
 // static folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(port, () => {});
+app.listen(3000, () => {});
