@@ -1,17 +1,20 @@
 const express = require("express");
+
 const app = express();
 const path = require("path");
 const logger = require("./middlewares/logger");
 const { port } = require("./config/app");
 
-app.use(logger);
+const routes = require("./routes/index.routes");
 
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Members routes
-app.use("/api/clients", require("./routes/api/clients"));
+app.use(logger);
+
+// Routes
+app.use("/", routes);
 
 // static folder
 app.use(express.static(path.join(__dirname, "public")));

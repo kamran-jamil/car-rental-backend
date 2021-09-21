@@ -1,11 +1,44 @@
-const moment = require("moment");
-
 const logger = (req, res, next) => {
-  console.log(
-    `${req.protocol}://${req.get("host")}${
-      req.originalUrl
-    }: ${moment().format()}`
-  );
+  const requestStart = Date.now();
+  let errorMessage = null;
+  let body = [];
+  req.on("data", (chunk) => {
+    body.push(chunk);
+  });
+  req.on("end", () => {
+    body = Buffer.concat(body).toString();
+  });
+  req.on("error", (error) => {
+    errorMessage = error.message;
+  });
+  res.on("finish", () => {
+    const { rawHeaders, httpVersion, method, socket, url } = req;
+    const { remoteAddress, remoteFamily } = socket;
+
+    const { statusCode, statusMessage } = res;
+    const headers = res.getHeaders();
+
+    console.log(
+      JSON.stringify({
+        timestamp: Date.now(),
+        processingTime: Date.now() - requestStart,
+        rawHeaders,
+        body,
+        errorMessage,
+        httpVersion,
+        method,
+        remoteAddress,
+        remoteFamily,
+        url,
+        response: {
+          statusCode,
+          statusMessage,
+          headers,
+        },
+      })
+    );
+  });
+
   next();
 };
 
