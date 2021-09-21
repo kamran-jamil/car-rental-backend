@@ -1,8 +1,11 @@
-const Sequilize = require("sequelize");
 const dotenv = require("dotenv");
-const { db } = require("./app");
+dotenv.config();
 
-module.exports = new Sequilize(db.name, db.username, db.password, {
-  host: db.host_address,
-  dialect: db.dialect,
-});
+module.exports = {
+  dialect: process.env.DB_DIALECT,
+  host_address: process.env.DB_HOST,
+  name: process.env.DB_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+};
