@@ -1,13 +1,31 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const moment = require("moment");
+const { createLogger, format, transports } = require("winston");
 
-const logger = (req, res, next) => {
-  console.log(
-    `${req.protocol}://${req.get("host")}${
-      req.originalUrl
-    }: ${moment().format()}`
-  );
-  next();
+const { combine, timestamp, label, printf } = format;
+
+const myFormat = printf(
+  ({ level, message, text, timeStamp }) =>
+    `${timeStamp} [${text}] ${level}: ${message}`
+);
+
+const filename = module.filename.split("/").slice(-1);
+const options = {
+  level: "error",
+  format: combine(
+    label({ label: filename }),
+    timestamp(),
+    myFormat,
+    format.colorize(),
+    format.json(),
+    format.prettyPrint(),
+    format.json()
+  ),
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename: "error.log", level: "error" }),
+  ],
 };
+// const logger = createLogger(options);
+
+const logger = createLogger(options);
 
 module.exports = logger;

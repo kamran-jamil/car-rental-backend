@@ -1,22 +1,17 @@
 const express = require("express");
-
-const app = express();
-// eslint-disable-next-line import/order
+const morgan = require("morgan");
 const path = require("path");
-const errorHandlerMiddleware = require("./middlewares/error-handler");
 const logger = require("./middlewares/logger");
 
-app.use(logger);
+const app = express();
 
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(morgan("combined", { stream: logger.stream.write }));
 // User routes
-
 require("./routes/api")(app);
-
-app.use(errorHandlerMiddleware);
 
 // static folder
 app.use(express.static(path.join(__dirname, "public")));
