@@ -11,7 +11,7 @@ const errorResponse = (
   errorMessage = "Something went wrong",
   code = 500,
   error = {}
-) =>
+) => {
   res.status(500).json({
     code,
     errorMessage,
@@ -19,6 +19,7 @@ const errorResponse = (
     data: null,
     success: false,
   });
+};
 
 module.exports = {
   successResponse,

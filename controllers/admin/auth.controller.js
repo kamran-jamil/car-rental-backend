@@ -1,5 +1,4 @@
-const Joi = require("joi");
-const User = require("../../models/User");
+const { User } = require("../../models");
 const bcrypt = require("bcrypt");
 const firebase = require("../../helpers/auth");
 const {
@@ -18,7 +17,7 @@ const register = async (req, res, _next) => {
     let { email, password, firstName, lastName } = req.body;
     let user, auth, userCredential, firebaseUser, uuid, salt, payload, newUser;
 
-    user = await User.scope("withSecretColumns").findOne({
+    user = await User.findOne({
       where: { email },
     });
     if (user) {
@@ -65,7 +64,7 @@ const login = async (req, res, _next) => {
     uuid = firebaseUser.uid;
     emailVerified = firebaseUser.emailVerified;
 
-    user = await User.scope("withSecretColumns").findOne({
+    user = await User.findOne({
       where: { uuid, email },
     });
     if (!user) {
