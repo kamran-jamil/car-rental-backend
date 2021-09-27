@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const logger = require("./middlewares/logger");
+const routes = require("./routes");
 
 const app = express();
 
@@ -10,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(morgan("combined", { stream: logger.stream.write }));
-// User routes
-require("./routes/api")(app);
+// routes
+app.use("/", routes);
 
 // static folder
 app.use(express.static(path.join(__dirname, "public")));

@@ -1,16 +1,7 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate() {
-      // define association here
-    }
-  }
+  class User extends Model {}
   User.init(
     {
       first_name: DataTypes.STRING,
@@ -25,5 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+  // added for testing purposes
+  User.addHook("beforeCreate", (user) => {
+    if (user.email !== "noman@gmail.com") {
+      throw new Error("You don't have permission!");
+    }
+  });
+
   return User;
 };
