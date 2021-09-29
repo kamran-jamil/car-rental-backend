@@ -1,27 +1,63 @@
-const { Model } = require("sequelize");
+const Sequilize = require("sequelize");
+const db = require("../helpers/database");
 
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {}
-  User.init(
-    {
-      first_name: DataTypes.STRING,
-      last_name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      role: DataTypes.STRING,
-      status: DataTypes.STRING,
+const User = db.define(
+  "User",
+  {
+    uuid: {
+      type: Sequilize.STRING,
+      allowNull: false,
+      primaryKey: true,
     },
-    {
-      sequelize,
-      modelName: "User",
-    }
-  );
-  // added for testing purposes
-  User.addHook("beforeCreate", (user) => {
-    if (user.email !== "noman@gmail.com") {
-      throw new Error("You don't have permission!");
-    }
-  });
+    firstName: {
+      type: Sequilize.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: Sequilize.STRING,
+    },
+    email: {
+      type: Sequilize.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: Sequilize.STRING,
+    },
+    profilePic: {
+      type: Sequilize.STRING,
+    },
+    role: {
+      type: Sequilize.STRING,
+      defaultValue: "client",
+    },
+    verifyToken: {
+      type: Sequilize.STRING,
+      defaultValue: null,
+    },
+    isVerified: {
+      type: Sequilize.BOOLEAN,
+      defaultValue: false,
+    },
+    createdAt: {
+      allowNull: false,
+      type: Sequilize.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: Sequilize.DATE,
+    },
+  },
+  {
+    defaultScope: {
+      attributes: { exclude: ["password", "verifyToken"] },
+    },
+    scopes: {
+      withSecretColumns: {
+        attributes: { include: ["password", "verifyToken"] },
+      },
+    },
+  }
+);
 
-  return User;
-};
+module.exports = User;
