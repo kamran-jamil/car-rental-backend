@@ -1,45 +1,31 @@
-const logger = (req, res, next) => {
-  const requestStart = Date.now();
-  let errorMessage = null;
-  let body = [];
-  req.on("data", (chunk) => {
-    body.push(chunk);
-  });
-  req.on("end", () => {
-    body = Buffer.concat(body).toString();
-  });
-  req.on("error", (error) => {
-    errorMessage = error.message;
-  });
-  res.on("finish", () => {
-    const { rawHeaders, httpVersion, method, socket, url } = req;
-    const { remoteAddress, remoteFamily } = socket;
+const { createLogger, format, transports } = require("winston");
 
-    const { statusCode, statusMessage } = res;
-    const headers = res.getHeaders();
+const { combine, timestamp, label, printf } = format;
 
-    console.log(
-      JSON.stringify({
-        timestamp: Date.now(),
-        processingTime: Date.now() - requestStart,
-        rawHeaders,
-        body,
-        errorMessage,
-        httpVersion,
-        method,
-        remoteAddress,
-        remoteFamily,
-        url,
-        response: {
-          statusCode,
-          statusMessage,
-          headers,
-        },
-      })
-    );
-  });
+const myFormat = printf(
+  ({ level, message, text, timeStamp }) =>
+    `${timeStamp} [${text}] ${level}: ${message}`
+);
 
-  next();
+const filename = module.filename.split("/").slice(-1);
+const options = {
+  level: "error",
+  format: combine(
+    label({ label: filename }),
+    timestamp(),
+    myFormat,
+    format.colorize(),
+    format.json(),
+    format.prettyPrint(),
+    format.json()
+  ),
+  transports: [
+    new transports.Console(),
+    new transports.File({ filename: "error.log", level: "error" }),
+  ],
 };
+// const logger = createLogger(options);
+
+const logger = createLogger(options);
 
 module.exports = logger;
