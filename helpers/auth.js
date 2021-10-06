@@ -1,3 +1,4 @@
+const { initializeApp } = require("firebase/app");
 const {
   api_key,
   auth_domain,
@@ -6,8 +7,6 @@ const {
   sender_id,
   app_id,
 } = require("../config/firebase");
-
-const { initializeApp } = require("firebase/app");
 
 const firebaseConfig = {
   apiKey: api_key,
@@ -18,4 +17,4 @@ const firebaseConfig = {
   appId: app_id,
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);

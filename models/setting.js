@@ -1,5 +1,5 @@
-const { STRING } = require("sequelize");
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Setting extends Model {
     /**

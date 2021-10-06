@@ -14,5 +14,7 @@ module.exports = {
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "import/no-dynamic-require": 0,
     "global-require": 0,
+    camelcase: 0,
+    "prefer-const": 0,
   },
 };

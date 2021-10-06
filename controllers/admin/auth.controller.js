@@ -1,21 +1,28 @@
-const { User } = require("../../models");
 const bcrypt = require("bcrypt");
-const firebase = require("../../helpers/auth");
-const {
-  successResponse,
-  errorResponse,
-} = require("../../helpers/responseHelper");
 const {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
 } = require("firebase/auth");
+const { User } = require("../../models");
+require("../../helpers/auth");
+const {
+  successResponse,
+  errorResponse,
+} = require("../../helpers/responseHelper");
 
 const register = async (req, res, _next) => {
   try {
     let { email, password, firstName, lastName } = req.body;
-    let user, auth, userCredential, firebaseUser, uuid, salt, payload, newUser;
+    let user;
+    let auth;
+    let userCredential;
+    let firebaseUser;
+    let uuid;
+    let salt;
+    let payload;
+    let newUser;
 
     user = await User.findOne({
       where: { email },
@@ -56,8 +63,13 @@ const register = async (req, res, _next) => {
 
 const login = async (req, res, _next) => {
   try {
-    let { email, password } = req.body;
-    let auth, userCredential, firebaseUser, uuid, emailVerified, user;
+    const { email, password } = req.body;
+    let auth;
+    let userCredential;
+    let firebaseUser;
+    let uuid;
+    let emailVerified;
+    let user;
     auth = getAuth();
     userCredential = await signInWithEmailAndPassword(auth, email, password);
     firebaseUser = userCredential.user;
@@ -83,7 +95,7 @@ const login = async (req, res, _next) => {
     }
 
     return successResponse(req, res, {
-      user: user,
+      user,
     });
   } catch (error) {
     return errorResponse(req, res, error);
