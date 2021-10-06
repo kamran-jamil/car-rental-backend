@@ -11,5 +11,8 @@ module.exports = {
   plugins: ["prettier"],
   rules: {
     "prettier/prettier": "error",
+    "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "import/no-dynamic-require": 0,
+    "global-require": 0,
   },
 };
