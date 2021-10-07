@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 const adminAuthController = require("../../../controllers/admin/auth.controller");
 const { adminAuthValidation } = require("../../../validations/index");
@@ -11,7 +12,7 @@ router.post(
   adminAuthController.register
 );
 
-//Signin
+// Signin
 router.post(
   "/signin",
   validate(adminAuthValidation.login),
