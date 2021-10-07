@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       account_status: DataTypes.ENUM("active", "inactive", "pending"),
-      referrer_uuid: DataTypes.UUID,
+      referrer_uuid: DataTypes.STRING,
       is_approved: DataTypes.BOOLEAN,
       referred_at: DataTypes.DATE,
       verified_at: DataTypes.DATE,

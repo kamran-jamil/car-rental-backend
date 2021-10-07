@@ -1,5 +1,7 @@
-const adminAuthValidation = require("./admin.auth.validations");
+const authValidation = require("./auth.validations");
+const settingsValidation = require("./settings.validation");
 
 module.exports = {
-  adminAuthValidation,
+  authValidation,
+  settingsValidation,
 };

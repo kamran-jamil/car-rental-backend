@@ -1,5 +1,6 @@
 const express = require("express");
 const adminAuthRoutes = require("./api/api.routes");
+
 const router = express.Router();
 
 const defaultRoutes = [
