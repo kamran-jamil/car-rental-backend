@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM("string", "number", "date"),
       key: DataTypes.STRING,
       value: DataTypes.STRING,
+      slug: DataTypes.STRING,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

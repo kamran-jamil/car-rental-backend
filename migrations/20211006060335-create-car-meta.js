@@ -20,6 +20,7 @@ module.exports = {
       type: Sequelize.DataTypes.ENUM("string", "number", "date"),
       key: Sequelize.STRING,
       value: Sequelize.STRING,
+      slug: Sequelize.STRING,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
