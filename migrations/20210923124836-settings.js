@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
       },
       name: Sequelize.DataTypes.STRING,
-      value: Sequelize.DataTypes.JSON,
+      value: Sequelize.DataTypes.STRING,
       setting_owner_uuid: {
         type: Sequelize.DataTypes.STRING,
         references: {

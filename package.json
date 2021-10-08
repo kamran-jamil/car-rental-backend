@@ -2,8 +2,12 @@
   "name": "node-practice-project",
   "version": "0.0.0",
   "main": "main.js",
+  "engineStrict": true,
+  "engines": {
+    "node": "^14.0.0"
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "nodemon main.js",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --fix main.js",
@@ -45,6 +49,7 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
-    "supports-color": "^9.0.2"
+    "supports-color": "^9.0.2",
+    "uuid": "^8.3.2"
   }
 }

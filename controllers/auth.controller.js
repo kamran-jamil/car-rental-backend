@@ -5,12 +5,9 @@ const {
   signInWithEmailAndPassword,
   sendEmailVerification,
 } = require("firebase/auth");
-const { User } = require("../../models");
-require("../../helpers/auth");
-const {
-  successResponse,
-  errorResponse,
-} = require("../../helpers/responseHelper");
+const { User } = require("../models");
+require("../helpers/auth");
+const { successResponse, errorResponse } = require("../helpers/responseHelper");
 
 const register = async (req, res, _next) => {
   try {
