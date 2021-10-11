@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static carMetaMethod() {
+      return ["color", "brand_name", "registration_no"];
+    }
+    // static carMetaArr(["color", "registration"]);
+
     static associate(models) {
       Car.belongsTo(models.User, {
         foreignKey: "owner_uuid",

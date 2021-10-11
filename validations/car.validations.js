@@ -11,6 +11,9 @@ const create = {
     feedbacks_count: Joi.number().optional(),
     discount: Joi.number().optional(),
     discount_till: Joi.date().optional(),
+    registration_no: Joi.number().required(),
+    color: Joi.string().required(),
+    brand_name: Joi.string().required(),
   }),
 };
 

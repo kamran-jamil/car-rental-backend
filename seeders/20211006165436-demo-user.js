@@ -2,9 +2,9 @@ module.exports = {
   up: (queryInterface) =>
     queryInterface.bulkInsert("users", [
       {
-        uuid: "UUIF",
-        first_name: "John",
-        last_name: "Doe",
+        uuid: "1",
+        first_name: "Noman",
+        last_name: "Liaqat",
         email: "example@example.com",
         password: "1234",
         account_status: "active",

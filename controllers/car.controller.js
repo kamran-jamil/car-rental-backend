@@ -6,7 +6,7 @@ const carList = async (req, res, _next) => {
   try {
     let cars = [];
     cars = await Car.findAll({
-      include: [{ model: CarType }, { model: CarMeta }],
+      include: [{ model: CarType }],
     });
     return successResponse(req, res, cars);
   } catch (err) {
@@ -17,8 +17,11 @@ const carList = async (req, res, _next) => {
 const createCar = async (req, res, _next) => {
   try {
     let car = {};
+    let metaArr = [];
+    const carMeta = Car.carMetaMethod();
+    let reqObject = req.body;
     const { owner_uuid, car_type_uuid, description, status, rate, discount } =
-      req.body;
+      reqObject;
     const payload = {
       owner_uuid,
       car_type_uuid,
@@ -28,6 +31,25 @@ const createCar = async (req, res, _next) => {
       discount,
     };
     car = await Car.create(payload);
+    const keys = Object.keys(req.body);
+    for await (let key of carMeta) {
+      const findElement = keys.some((item) => item === key);
+      if (findElement) {
+        const value = reqObject[key];
+        const type = typeof value;
+        const carMetaPayload = {
+          car_uuid: car.uuid,
+          type,
+          key,
+          value,
+        };
+
+        const response = await CarMeta.create(carMetaPayload);
+        metaArr.push(response.toJSON());
+      }
+    }
+    car = car.toJSON();
+    car.meta = metaArr;
     return successResponse(req, res, car);
   } catch (err) {
     return errorResponse(req, res, err.message, 400);
@@ -40,7 +62,6 @@ const updateCar = async (req, res, _next) => {
     let car = [];
     const uuid = req.params.id;
     findCar = await Car.findOne({ where: { uuid } });
-    console.log("findCar", findCar);
     if (!findCar) throw new Error("Car not found!");
     car = await Car.update(req.body, {
       where: { uuid },

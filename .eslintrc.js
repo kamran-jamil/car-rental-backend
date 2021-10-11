@@ -16,5 +16,11 @@ module.exports = {
     "global-require": 0,
     camelcase: 0,
     "prefer-const": 0,
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement",
+    ],
   },
 };
